@@ -215,9 +215,8 @@ with st.expander("Descrição do dataset", expanded=False):
 
 
 #dataset
-url = "https://raw.githubusercontent.com/allanbraquiel/Stack_Labs_2_Squad_Scikit-Learn/main/datasets/diabetes_binary_5050split_health_indicators_BRFSS2015.csv"
-aws = "https://stacklabs02.s3.amazonaws.com/diabetes_binary_5050split_health_indicators_BRFSS2015.csv"
-df = pd.read_csv(aws)
+url = "https://raw.githubusercontent.com/josue-macena-jr/diabets-diagnostics/main/datasets/diabetes_binary_5050split_health_indicators_BRFSS2015.csv"
+df = pd.read_csv(url)
 
 df = df.astype(int)
 
