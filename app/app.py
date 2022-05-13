@@ -25,13 +25,13 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 st.set_page_config(
-    page_title="Squad Scikit-Learn",
+    page_title="Diagnóstico Diabetes",
     layout="wide",
     page_icon=":shark",
     initial_sidebar_state="expanded",
 )
 
-st.sidebar.image('https://github.com/josue-macena-jr/diabets-diagnostics/blob/main/app/images/Scikit_learn_logo_small.svg.png', use_column_width=True)
+st.sidebar.image('https://github.com/josue-macena-jr/diabets-diagnostics/blob/main/1648043753137.png', use_column_width=True)
 
 #título
 st.title("Projeto Diagnóstico Diabetes")
@@ -241,8 +241,10 @@ def get_user_date():
         PressAlta = 1
     else:
         PressAlta = 0
-
-    IMC = st.sidebar.number_input("Índice de massa corporal", min_value=12, max_value=100, value=28)
+    
+    altura = st.sidebar.number_input("Indique sua altura em centímetros", min_value=10, max_value=300, value=170)
+    peso = st.sidebar.number_input("Indique sua massa corporal em quilogramas", min_value=12, max_value=200, value=28)
+    IMC = peso/((altura/100)**2)
 
     # Idade = st.sidebar.slider("Idade", 0, 100, 25)
     Idade = st.sidebar.number_input("Idade", min_value=0, max_value=100, value=30)
