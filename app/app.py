@@ -34,10 +34,10 @@ st.set_page_config(
 st.sidebar.image('https://stacklabs02.s3.amazonaws.com/Scikit_learn_logo_small.svg.png', use_column_width=True)
 
 #título
-st.title("Projeto Stack Labs - Diabetes Diagnóstico")
+st.title("Projeto Diagnóstico Diabetes")
 
 # Apresentação
-st.subheader("Participante")
+st.subheader("Desenvolvido por:")
 st.write(""" 
 - [**Josué Macena**](https://www.linkedin.com/in/josue-junior-goncalves-macena/)""")
 
@@ -413,7 +413,7 @@ if btn_predict:
     else:
         st.write("Negativo")
         st.write("Aparentemente você não tem as características de uma pessoa com diabetes. Mas não se descuide, faça exames periódicos,",  
-        "pratiqe exercícios e tenha uma boa alimentação.")
+        "pratique exercícios e tenha uma boa alimentação.")
 
 # st.write("Score: ", arvore.score(y_test, prediction))
 
