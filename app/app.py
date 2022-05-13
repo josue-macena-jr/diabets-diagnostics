@@ -31,7 +31,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.sidebar.image('https://stacklabs02.s3.amazonaws.com/Scikit_learn_logo_small.svg.png', use_column_width=True)
+st.sidebar.image('https://github.com/josue-macena-jr/diabets-diagnostics/blob/main/app/images/Scikit_learn_logo_small.svg.png', use_column_width=True)
 
 #título
 st.title("Projeto Diagnóstico Diabetes")
