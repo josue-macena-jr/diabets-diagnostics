@@ -43,7 +43,7 @@ st.write("""
 
 # Descriçaõ do projeto
 st.subheader("Objetivo do Projeto:")
-st.write("**Realizar uma previsão de pessoas que podem vir a desenvolver Diabetes com base nas suas características atuais, usando um algoritmo de Machine Learning para realizar uma predição.**")
+st.write("**Realizar uma previsão de pessoas que podem vir a desenvolver diabetes tipo 2, com base nas suas características atuais, usando o algoritmo Random Forest de Machine Learning para realizar a predição.**")
 
 # Descrição do dataset
 with st.expander("Descrição do dataset", expanded=False):
@@ -197,11 +197,10 @@ with st.expander("Descrição do dataset", expanded=False):
 
 
         **Income - Renda Familiar**\n
-        Sua renda familiar anual é de todas as fontes: (Se o respondente recusar em qualquer nível de renda, codifique "Recusado".)
+        Sua renda familiar anual: (Se o respondente recusar em qualquer nível de renda, codifique "Recusado".)
 
         *   1: Menor que $10 mil
         *   2: 15 mil
-
         *   3: 20 mil
         *   4: 25 mil
         *   5: 35 mil
@@ -226,7 +225,69 @@ st.sidebar.subheader("Filtros para realizar a predição")
 #nomedousuário
 user_input = st.sidebar.text_input("Digite seu nome:", placeholder="Digite seu nome")
 
+#dados do usuário como classe
 
+class Paciente():
+    
+    def __init__(self):
+        """ O paciente deve inserir suas características definidas que serão inseridas
+            no algoritmo para previsão.
+            As características principais são:
+            ---- Colesterol alto;
+            ---- Pressão arterial;
+            ---- IMC (raramente as pessoas sabem seu Índice de Massa Corpórea, por isso o valor aqui é 
+            calculado indiretamente pelo peso, em quilogramas, e altura, em centímetros usando a fórmula
+            IMC = peso/altura^2);
+            ---- Idade;
+            ---- Sexo;
+            ---- Fumante;
+            ---- Derrame;
+            ---- Consumidor de Álcool;
+            ---- Renda familiar anual;
+        """
+        self.CholAlto = st.sidebar.selectbox("Tem Colesterol Alto?", ("Sim", "Não"))
+        self.PressaoAlta = st.sidebar.selectbox("É hipertenso?", ("Sim", "Não"))
+        self.Altura = st.sidebar.number_input("Indique sua altura em centímetros", min_value=10, max_value=300, value=170)
+        self.Peso = st.sidebar.number_input("Indique sua massa corporal em quilogramas", min_value=12, max_value=200, value=28)
+        self.IMC = self.Peso/((self.Altura/100)**2)
+        self.Idade = st.sidebar.number_input("Idade", min_value=0, max_value=200, value=30)
+        self.Sexo = st.sidebar.selectbox("Sexo", ("Feminino", "Masculino"))
+        self.Fumante = st.sidebar.selectbox("É fumante?", ("Sim", "Não"))
+        self.Derrame = st.sidebar.selectbox("Já sofreu derrame?", ("Sim", "Não"))
+        self.ConsAlcool  = st.sidebar.selectbox("Consome álcool?", ("Sim", "Não"))
+        self.Renda = st.sidebar.selectbox("Renda familiar anual", ("10 Mil", "15 Mil", "20 Mil", "25 Mil", "35 Mil", "50 Mil", 
+                                    "75 Mil", "Maior que 75 Mil"))
+    
+    def FeatureReturn(self):
+        """Transformando os dados do paciente em um dicionário e em seguida transportando-o para um
+        dataframe. Esse dataframe irá servir de base para a previsão do algoritmo de Machine Learning aplicado."""
+        user_data = {
+                'Colesterol': self.CholAlto,
+                'Pressão Sanguínea': self.PressAlta,
+                'Índice de massa corporal': self.IMC,
+                'Idade': self.Idade,
+                'Sexo': self.Sexo,
+                'Fumante': self.Fumante,
+                'Derrame': self.Derrame,
+                'Consome Alcool': self.ConsAlcool,
+                'Renda': self.Renda
+                }
+    
+        features = pd.DataFrame(user_data, index=[0])
+        return features
+    
+    def ConvertBinaryValues(self):
+        """Essa função converte os valores de Sim ou Não em 1 ou 0, respectivamente"""
+        for key, value in self.__dict__.items():
+            if value == "Sim" or value == "Feminino":
+                self.__setattr__(key, 1)
+            elif value == "Não" or value == "Masculino":
+                self.__setattr__(key, 0)
+                
+    def ConvertIntervalValues(self):
+        pass
+        
+    
 #dados dos usuários com a função
 def get_user_date():
 
@@ -335,7 +396,7 @@ def get_user_date():
                 'Consome Alcool': ConsAlcool,
                 'Renda': Renda
                 }
-
+    
     features = pd.DataFrame(user_data, index=[0])
 
     return features
