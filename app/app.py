@@ -229,6 +229,8 @@ user_input = st.sidebar.text_input("Digite seu nome:", placeholder="Digite seu n
 
 class Paciente():
     
+    tupleYesNot = ("Sim",'Não')
+    tupleIncome = ("10 Mil", "15 Mil", "20 Mil", "25 Mil", "35 Mil", "50 Mil", "75 Mil", "Maior que 75 Mil")
     def __init__(self):
         """ O paciente deve inserir suas características definidas que serão inseridas
             no algoritmo para previsão.
@@ -245,18 +247,17 @@ class Paciente():
             ---- Consumidor de Álcool;
             ---- Renda familiar anual;
         """
-        self.CholAlto = st.sidebar.selectbox("Tem Colesterol Alto?", ("Sim", "Não"))
-        self.PressaoAlta = st.sidebar.selectbox("É hipertenso?", ("Sim", "Não"))
+        self.CholAlto = st.sidebar.selectbox("Tem Colesterol Alto?", self.tupleYesNot)
+        self.PressaoAlta = st.sidebar.selectbox("É hipertenso?", self.tupleYesNot)
         self.Altura = st.sidebar.number_input("Indique sua altura em centímetros", min_value=10, max_value=300, value=170)
         self.Peso = st.sidebar.number_input("Indique sua massa corporal em quilogramas", min_value=12, max_value=200, value=28)
         self.IMC = self.Peso/((self.Altura/100)**2)
         self.Idade = st.sidebar.number_input("Idade", min_value=0, max_value=200, value=30)
         self.Sexo = st.sidebar.selectbox("Sexo", ("Feminino", "Masculino"))
-        self.Fumante = st.sidebar.selectbox("É fumante?", ("Sim", "Não"))
-        self.Derrame = st.sidebar.selectbox("Já sofreu derrame?", ("Sim", "Não"))
-        self.ConsAlcool  = st.sidebar.selectbox("Consome álcool?", ("Sim", "Não"))
-        self.Renda = st.sidebar.selectbox("Renda familiar anual", ("10 Mil", "15 Mil", "20 Mil", "25 Mil", "35 Mil", "50 Mil", 
-                                    "75 Mil", "Maior que 75 Mil"))
+        self.Fumante = st.sidebar.selectbox("É fumante?",self.tupleYesNot)
+        self.Derrame = st.sidebar.selectbox("Já sofreu derrame?", self.tupleYesNot)
+        self.ConsAlcool  = st.sidebar.selectbox("Consome álcool?", self.tupleYesNot)
+        self.Renda = st.sidebar.selectbox("Renda familiar anual", self.tupleIncome)
     
     def FeatureReturn(self):
         """Transformando os dados do paciente em um dicionário e em seguida transportando-o para um
@@ -284,8 +285,21 @@ class Paciente():
             elif value == "Não" or value == "Masculino":
                 self.__setattr__(key, 0)
                 
-    def ConvertIntervalValues(self):
-        pass
+    def ConvertYearsValues(self):
+        if self.Idade>=18 and self.Idade<25:
+            self.Idade = 1
+        else:
+            for i in range(25,81,5):
+                if i%5 == 0:
+                    self.Idade = int(i/5 - 3)
+            
+    def ConvertIncomeValues(self):
+            for count, value in enumerate(self.tupleIncome):
+                if self.Renda == value:
+                    self.Renda = count+1
+            
+            
+            
         
     
 #dados dos usuários com a função
